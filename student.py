@@ -1,4 +1,7 @@
-# opiskelijanumerot
+# Validates a number using a checksum:
+# the digits (except the last) are weighted in a repeating 3-7-1 pattern,
+# summed, and the final digit must match the amount needed to reach the next multiple of ten.
+# It also requires the number to start with 0.
 
 from functools import reduce
 def check_number(number: str):

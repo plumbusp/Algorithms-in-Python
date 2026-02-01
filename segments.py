@@ -1,3 +1,4 @@
+# Groups consecutive identical characters in a sequence and counts their lengths, producing a run-length encoding of the input.
 from collections import defaultdict
 def find_segments(data):
     previousLetter = ""

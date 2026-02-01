@@ -1,15 +1,4 @@
-# def count_numbers(a, b) -> int:
-#     suitableCount = 0
-#     for num in range(a,b+1): # runs n times
-#         numString = str(num) 
-#         suitable = True
-#         for i in range(0, len(numString)):
-#             if numString[i] != "2" and numString[i] != "5": #runs n times
-#                 suitable = False # runs n times worst case
-#         if suitable:
-#             suitableCount+=1 #runs n times worst case
-#     return suitableCount
-
+# Counts how many integers within a given range can be formed using only the digits 2 and 5.
 
 def count_numbers(a, b) -> int:
     cnt = 0

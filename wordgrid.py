@@ -1,3 +1,4 @@
+# Counts how many times a given word appears horizontally in a square grid, matching letters from left to right.
 class WordFinder:
     def __init__(self):
         self.grid = [] #

@@ -1,3 +1,5 @@
+# Checks whether the sum of the squares of a year’s digits consists of identical digits only. 
+# Returns true if all digits in that sum are the same, otherwise false.
 def check_year(year):
     yearString = str(year)
     yearNumbers = [int(letter) for letter in yearString]

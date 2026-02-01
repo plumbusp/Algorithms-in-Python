@@ -1,3 +1,4 @@
+# Calculates the minimum number of boxes needed to hold all products, rounding up when products don’t fit evenly.
 import math
 def min_count(product_count:int, box_size:int) -> int:
     return math.ceil(product_count/box_size)
