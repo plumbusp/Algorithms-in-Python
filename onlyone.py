@@ -1,4 +1,4 @@
-# O(n) algorythm that looks for a different value from the list of length > 3
+# O(n) algorithm that looks for a different value from the list of length > 3
 def find_number(numbers):
     firstNumber = numbers[0]
     secondNumber = numbers[1]

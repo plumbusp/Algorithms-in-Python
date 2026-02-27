@@ -1,4 +1,4 @@
-# the task is to create an O(n) algorythm that will count the amount of sublists in which numbers are increasing
+# the task is to create an O(n) algorithm that will count the amount of sublists in which numbers are increasing
 # solution is simple: I just count how many increading sublists end at each position.
 def count_sublists(numbers):
     previousNumber = -1

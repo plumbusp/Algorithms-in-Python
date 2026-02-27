@@ -1,7 +1,7 @@
 # Taks: Given the price of a single stock over n days, compute for each day
 #       the maximum profit achievable by selling the stock on that day.
 #       (The stock may be bought on the same day or any earlier day)
-# Solution: The algorythm runs in O(n) time by tracking the minimum stock value
+# Solution: The algorithm runs in O(n) time by tracking the minimum stock value
 #           and calculating available profit based on current stock and min stock value difference.
 def find_profits(prices):
     minPrice = -1

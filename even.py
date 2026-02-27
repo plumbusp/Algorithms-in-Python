@@ -1,4 +1,4 @@
-# the task was to realize an O(n) algorythm that would count an amount of sublists with all even numbers
+# the task was to create an O(n) algorithm that would count an amount of sublists with all even numbers
 import math
 def count_sublists(numbers):
     evensInRow = 0
