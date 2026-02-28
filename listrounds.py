@@ -17,7 +17,15 @@ def find_rounds(numbers: list):
                 last_number = number
         sorted_lists.append(listEntry)
 
+# just counts rounds
+def findRound(numbers):
+    length = len(numbers)
+    rounds = 1
+    for i in range(0,length-1):
+        if numbers[i+1] < numbers[i]:
+            rounds+=1
 
+    return rounds
 
 if __name__ == "__main__":
     print(find_rounds([1, 2, 3, 4]))
