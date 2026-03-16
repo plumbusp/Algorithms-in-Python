@@ -1,7 +1,44 @@
-# The set behavior of a simple robot
-#
+# Task: make a Turing machine
 def calculate(input, rules):
-    pass
+    string = list("L"+ input +"R")
+    pos = 0
+    state = 1
+    action= 0
+    maxSteps = 1000
+    steps = 0
+
+    def findNeededRule(symbol, state):
+        newSymbol = -1
+        newState = 0
+        newAction = 0
+        for rule in rules:
+            if rule[0] == symbol and rule[1] == state:
+                newSymbol = rule[2]
+                newState = rule[3]
+                newAction = rule[4]
+        return newSymbol, newState, newAction
+    
+    while steps < maxSteps:
+        steps += 1
+        symbol, state, action = findNeededRule(string[pos], state)
+        if symbol == -1:
+            return False
+        
+        string[pos] = symbol
+        if action == "LEFT":
+            pos -= 1
+            if pos < 0:
+                return False
+        elif action == "RIGHT":
+            pos += 1
+            if pos >= len(string):
+                return False
+        elif action == "ACCEPT":
+            return True
+        elif action == "REJECT":
+            return False
+    return False
+
 
 if __name__ == "__main__":
     rules = []

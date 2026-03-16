@@ -1,83 +1,123 @@
 # Counts how many times a given word appears horizontally in a square grid, matching letters from left to right.
 
 class WordFinder:
-    def __init__(self):
-        self.grid = []
-        self.entriesSet = set()
-
-    def set_grid(self, grid: list):
-        self.grid = grid.copy()
-
-    def count(self,word) -> int:
-        self.__searchHorizontal(word)
-        self.__searchHorizontal(word, leftToRight=False)
-        self.__searchVertically(word)
-        self.__searchDiagonaly(word)
-        return len(self.entriesSet)
+    def set_grid(self, grid):
+        self.grid = grid
+        self.coordinates = {}
+        for row in range(0, len(self.grid)):
+            for column in range(0, len(self.grid[row])):
+                self.coordinates[(row,column)] = self.grid[row][column]
         
+        self.takenCoordinates = []
 
-    def __searchHorizontal(self, word, leftToRight=True):
-        if leftToRight:
-            for i in range(0, len(self.grid)): #rows
-                entry = ""
-                for j in range(0,len(self.grid[0])): #columns
-                    entry+= self.grid[i][j] # i row, j column
-                    if word in entry:
-                        self.entriesSet.add((i+1,j+1, )) # new entry on row i, column j (considering offset ny one)
-                        entry = "" # to avoid multiple calculation of the same word
-        else:
-            for i in range(0, len(self.grid)): #rows
-                entry = ""
-                for j in range(len(self.grid[0])-1,-1,-1): #columns
-                    if entry.endswith(word):
-                        self.entriesSet.add((j+1,i+1)) # new entry on row j, column i (considering offset ny one)
-                        entry = "" # to avoid multiple calculation of the same word
-                    entry+= self.grid[i][j] # j row, i column
+    def count(self, word):
+        rows = len(self.grid)
+        cols = len(self.grid[0])
+        count = 0
+        for row in range(rows):
+            for col in range(cols):
+                # Horizontal RIGHT
+                rowCoordinates = []
+                for i, char in enumerate(word):
+                    if (row, col+i) not in self.coordinates:# out of bounds
+                        break
+                    rowCoordinates.append((row, col+i))
+                if not self.__checkIfWordExists(rowCoordinates):
+                    self.takenCoordinates.extend(rowCoordinates)
+                    count+= 1
+
+                #Horizontal LEFT
+                coordinates = []
+                for i, char in enumerate(word):
+                    if (row, col - i) not in self.coordinates or self.coordinates[(row, col - i)] != char:
+                        break
+                    coordinates.append((row, col - i))
+                else:
+                    if not self.__checkIfWordExists(coordinates):
+                        self.takenCoordinates.extend(coordinates)
+                        count += 1
+
+                # Vertical down
+                coordinates = []
+                for i, char in enumerate(word):
+                    if (row + i, col) not in self.coordinates or self.coordinates[(row + i, col)] != char:
+                        break
+                    coordinates.append((row + i, col))
+                else:
+                    if not self.__checkIfWordExists(coordinates):
+                        self.takenCoordinates.extend(coordinates)
+                        count += 1
+
+                # Vertical up
+                coordinates = []
+                for i, char in enumerate(word):
+                    if (row - i, col) not in self.coordinates or self.coordinates[(row - i, col)] != char:
+                        break
+                    coordinates.append((row - i, col))
+                else:
+                    if not self.__checkIfWordExists(coordinates):
+                        self.takenCoordinates.extend(coordinates)
+                        count += 1
+
+                # Diagonal down-right
+                coordinates = []
+                for i, char in enumerate(word):
+                    if (row + i, col + i) not in self.coordinates or self.coordinates[(row + i, col + i)] != char:
+                        break
+                    coordinates.append((row + i, col + i))
+                else:
+                    if not self.__checkIfWordExists(coordinates):
+                        self.takenCoordinates.extend(coordinates)
+                        count += 1
+
+                # Diagonal down-left
+                coordinates = []
+                for i, char in enumerate(word):
+                    if (row + i, col - i) not in self.coordinates or self.coordinates[(row + i, col - i)] != char:
+                        break
+                    coordinates.append((row + i, col - i))
+                else:
+                    if not self.__checkIfWordExists(coordinates):
+                        self.takenCoordinates.extend(coordinates)
+                        count += 1
+
+                # Diagonal up-right
+                coordinates = []
+                for i, char in enumerate(word):
+                    if (row - i, col + i) not in self.coordinates or self.coordinates[(row - i, col + i)] != char:
+                        break
+                    coordinates.append((row - i, col + i))
+                else:
+                    if not self.__checkIfWordExists(coordinates):
+                        self.takenCoordinates.extend(coordinates)
+                        count += 1
+
+                # Diagonal up-left
+                coordinates = []
+                for i, char in enumerate(word):
+                    if (row - i, col - i) not in self.coordinates or self.coordinates[(row - i, col - i)] != char:
+                        break
+                    coordinates.append((row - i, col - i))
+                else:
+                    if not self.__checkIfWordExists(coordinates):
+                        self.takenCoordinates.extend(coordinates)
+                        count += 1
+
+            return count
+        
+    def __checkIfWordExists(self, wordCoordinates)-> bool:
+        sortedCoordinates = sorted(wordCoordinates)
+        self.takenCoordinates.sort()
+        count = 0
+        for c in self.takenCoordinates:
+            if c in sortedCoordinates:
+                count +=1
+        if count >= len(sortedCoordinates):
+            return True
+        return False
     
-    def __searchVertically(self, word):
-        for i in range(0, len(self.grid[0])): #columns
-            entry = ""
-            entry += self.grid[0][i] # first row, i column
-            for j in range(1,len(self.grid)): #rows
-                if entry.endswith(word):
-                    self.entriesSet.add((j+1,i+1))
-                    entry = "" 
-                entry+= self.grid[j][i]
-    
-    def __searchDiagonaly(self, word, fromTopLeft = True):
-        diagonalResultsList = []
-        rows = len(self.grid) -1 #rows (in index style)
-        columns = len(self.grid[0]) -1 #columns (in index style)
 
-        def gothroughDiagonal(self, diagonal):
-            entry = ""
-            if d % 2 == 0: # going UP
-                r = min(d, rows) # start row index is diagonal index if it is less then row amount, otherwise row amount
-                c = d - r
-                while r >= 0 and c <= columns:
-                    if entry.endswith(word):
-                        self.entriesSet.add((r+1,c+1))
-                        entry = "" 
-                    entry += self.grid[r][c]
-                    r -= 1
-                    c += 1
-            else:   # going DOWN
-                c = min(d, columns) # start column index is diagonal index if it is less or equal to column amount, otherwise column amount
-                r = d - c
-                while r <= rows and c >= 0:
-                    if entry.endswith(word):
-                        self.entriesSet.add((r+1,c+1))
-                        entry = "" 
-                    entry += self.grid[r][c]
-                    r += 1
-                    c -= 1
 
-        if fromTopLeft:
-            for d in range(rows + columns-1): # for each diagonal there is
-                gothroughDiagonal(self, d)
-        else:
-            for d in range(rows + columns-1,-1,-1): # for each diagonal there is
-                gothroughDiagonal(self, d)
 
 
 

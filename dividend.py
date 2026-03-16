@@ -1,15 +1,11 @@
 def find_profits(prices):
-    profits = [0]
-    total = 0
-    for i in range(1, len(prices)):
-        if prices[i] > prices[i-1]:
-            total+= (prices[i] - prices[i-1])+1
-        elif prices[i] == prices[i-1]:
-            total+= 1
-        profits.append(total)
-
+    profits= []
+    minBuyCost = prices[0]
+    for i in range(len(prices)):
+        buyCost = prices[i]+i
+        minBuyCost = min(minBuyCost, buyCost)
+        profits.append(max(0, buyCost-minBuyCost))
     return profits
-
 
 if __name__ == "__main__":
 
