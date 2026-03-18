@@ -5,7 +5,10 @@
 
 # Solution: create combinations of all lengths, from 1 to len(cards); loop through combinations,
 #       check if combination sum is targetSum --- if it is, increase count of such combinations; return count
-#           
+
+# Time:  O(2^n) - we generate all subsets
+# Space: O(2^n) - storing all combinations
+# Note:  not optimal for large inputs; dynamic programming would reduce to O(n * target)       
 import itertools
 def count_combinations(cards:list, targetSum: int):
     combinations = []
@@ -14,7 +17,6 @@ def count_combinations(cards:list, targetSum: int):
 
     targetCombinations = 0
     for comb in combinations:
-        combSum = 0
         if sum(comb) == targetSum:
             targetCombinations += 1
 
