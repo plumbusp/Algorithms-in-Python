@@ -30,26 +30,33 @@ class TreeSet:
 
     def prev(self, value):
         currentNode = self.root
+        biggest_smaller = None
         if currentNode == None:
-            return None
+            return biggest_smaller
+
         while True:
             if currentNode == None:
-                return None
-            elif currentNode.value >= value:
+                return biggest_smaller
+            # first left that smaller than value
+            if currentNode and currentNode.value < value:
+                biggest_smaller = currentNode.value
+                currentNode = currentNode.right
+            else:
                 currentNode = currentNode.left
-            elif currentNode.value < value:
-                return currentNode.value
-
     def next(self, value):
         currentNode = self.root
+        biggest_smaller = None
         if currentNode == None:
-            return None
+            return biggest_smaller
+
         while True:
             if currentNode == None:
-                return None
-            elif currentNode.value > value:
-                return currentNode.value
-            elif currentNode.value <= value:
+                return biggest_smaller
+            # first right that bigger than value
+            if currentNode and currentNode.value > value:
+                biggest_smaller = currentNode.value
+                currentNode = currentNode.left # looking for something smaller
+            else:
                 currentNode = currentNode.right
 
 if __name__ == "__main__":
@@ -69,3 +76,14 @@ if __name__ == "__main__":
     print(numbers.next(5)) # 7
     print(numbers.next(6)) # 7
     print(numbers.next(7)) # None
+    
+    numbers = TreeSet()
+    numbers.add(1)
+    print(numbers.prev(2))
+    print(numbers.next(2))
+    numbers.add(2)
+    print(numbers.prev(2))
+    print(numbers.next(2))
+    numbers.add(2)
+    print(numbers.prev(3)) #2
+    print(numbers.next(1)) #2
