@@ -50,6 +50,7 @@ def find_code(oracle: Oracle):
 
         in_code = in_code_now
         in_place = in_place_now
+        
 
     print(numbers_in_code)
 
